@@ -1,4 +1,4 @@
-# Connecting two namespaces using 
+# Connecting two namespaces using Linux Bridge Networking
 
 0. Lets check the `ip link` interfaces:
 ```
