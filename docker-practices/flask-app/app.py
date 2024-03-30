@@ -1,6 +1,3 @@
-#!/home/imshakil/devops-hands-on-practices/docker-practices/.env/bin/python3
-
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
