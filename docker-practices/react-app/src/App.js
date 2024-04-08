@@ -13,7 +13,7 @@ function App() {
   }, []);
 
   const fetchTasks = () => {
-    fetch('http://192.168.0.106:5000/tasks')
+    fetch('http://localhost:5000/tasks')
       .then(response => response.json())
       .then(data => {
         setTasks(data.tasks);
@@ -30,7 +30,7 @@ function App() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    fetch('http://192.168.0.106:5000/tasks', {
+    fetch('http://localhost:5000/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
