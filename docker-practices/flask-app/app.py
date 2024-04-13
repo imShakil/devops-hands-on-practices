@@ -1,25 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-
+import db
+import pymysql
 
 app = Flask(__name__)
 cors = CORS(app)
-
-# Dummy data
-tasks = [
-    {
-        'id': 1,
-        'title': 'Task 1',
-        'description': 'This is task 1',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': 'Task 2',
-        'description': 'This is task 2',
-        'done': False
-    }
-]
 
 @app.route('/')
 def helloWorld():
@@ -28,29 +13,34 @@ def helloWorld():
 # Route to get all tasks
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
+    cur = db.get_db().cursor()
+    cur.execute('SELECT * FROM tasks')
+    tasks = cur.fetchall()
+    cur.close()
     return jsonify({'tasks': tasks})
 
 # Route to get a specific task by id
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
+    cur = db.get_db().cursor()
+    cur.execute('SELECT * FROM tasks WHERE id = %s', (task_id,))
+    task = cur.fetchone()
+    cur.close()
+    if not task:
         return jsonify({'error': 'Task not found'}), 404
-    return jsonify({'task': task[0]})
+    return jsonify({'task': task})
 
 # Route to create a new task
 @app.route('/tasks', methods=['POST'])
 def create_task():
-    if not request.json or not 'title' in request.json:
-        return jsonify({'error': 'The title is required'}), 400
-    task = {
-        'id': tasks[-1]['id'] + 1,
-        'title': request.json['title'],
-        'description': request.json.get('description', ""),
-        'done': False
-    }
-    tasks.append(task)
-    return jsonify({'task': task}), 201
+    title = request.json.get('title', '')
+    description = request.json.get('description', '')
+    cur = db.get_db().cursor()
+    cur.execute('INSERT INTO tasks (title, description) VALUES (%s, %s)', (title, description))
+    db.get_db().commit()
+    task_id = cur.lastrowid
+    cur.close()
+    return jsonify({'task_id': task_id}), 201
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
