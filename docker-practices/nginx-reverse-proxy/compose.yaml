@@ -1,0 +1,17 @@
+version: '1.0.0'
+services:
+  proxy:
+    build: ./
+    networks:
+    - server1
+    - server2
+    ports:
+    - 80:80
+    - 443:443
+networks:
+  server1:
+    external: true
+    name: server1_default
+  server2:
+    external: true
+    name: server2_default

@@ -1,0 +1,25 @@
+services:
+  frontend:
+    image: imshakil/react
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+    container_name: 'react-app'
+  api:
+    image: imshakil/flask
+    ports:
+      - '5000:5000'
+    expose:
+      - '5000'
+    container_name: 'flask-app'
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'abCD#123'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    container_name: 'mysqlDB'
