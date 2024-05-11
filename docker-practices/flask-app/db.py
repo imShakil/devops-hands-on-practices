@@ -33,3 +33,16 @@ def close_db(e=None):
 
     if db is not None:
         db.close()
+
+def fmt_json(data):
+    jsonObj = []
+    for task in data:
+        jsonObj.append(
+            {
+            'id': task[0],
+            'title': task[1],
+            'description': task[2]
+            })
+    return jsonObj
+    
+

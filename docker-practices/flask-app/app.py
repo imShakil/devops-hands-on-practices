@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from db import getdb, setup_db
+from db import getdb, setup_db, fmt_json
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,6 +17,7 @@ def get_tasks():
     cur = cnx.cursor()
     cur.execute('SELECT * FROM tasks')
     tasks = cur.fetchall()
+    tasks = fmt_json(data=tasks)
     cnx.close()
     return jsonify({'tasks': tasks})
 
@@ -27,6 +28,7 @@ def get_task(task_id):
     cur = cnx.cursor()
     cur.execute('SELECT * FROM tasks WHERE id = %s', (task_id,))
     task = cur.fetchone()
+    task = fmt_json(list([task]))
     cnx.close()
     if not task:
         return jsonify({'error': 'Task not found'}), 404
@@ -40,7 +42,6 @@ def create_task():
     cnx = getdb()
     cur = cnx.cursor()
     cur.execute('INSERT INTO tasks (title, description) VALUES (%s, %s)', (title, description))
-    getdb().commit()
     task_id = cur.lastrowid
     cnx.commit()
     cnx.close()
