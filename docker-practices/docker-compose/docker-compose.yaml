@@ -1,0 +1,35 @@
+version: "1.0.0"
+
+services:
+  svc1:
+    image: nginx:latest
+    networks:
+      - nginx_connect
+    container_name: svc1
+    hostname: service1
+    ports:
+      - 8001:80
+    command: /bin/bash -c "echo 'Welcome to service 1.' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+  
+  svc2:
+    depends_on:
+      - svc1
+    image: nginx:latest
+    networks:
+      - nginx_connect
+    container_name: svc2
+    ports:
+      - 8002:80
+    hostname: service2
+    command: /bin/bash -c "echo 'Welcome to service 2.' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+
+networks:
+  nginx_connect:
+    name: nginx_connect
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.17.32/24
+
+    

@@ -1,0 +1,6 @@
+FROM mysql:8.0-debian
+
+# Install networking tools
+#RUN apt-get update && apt-get install -y iputils-ping net-tools && rm -rf /var/lib/apt/lists/*
+
+COPY ./slave.cnf /etc/mysql/conf.d/slave.cnf
