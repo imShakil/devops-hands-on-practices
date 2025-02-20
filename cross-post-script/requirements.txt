@@ -1,0 +1,7 @@
+python-medium-api==0.3.0
+wordpress-api==1.2.9
+pygithub==1.59.1
+python-dotenv==1.0.0
+markdown==3.4.3
+beautifulsoup4==4.12.2
+requests==2.31.0
