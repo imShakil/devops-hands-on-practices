@@ -1,11 +1,11 @@
 #syntax=docker/dockerfile:1
 
-FROM ubuntu:18.04
+FROM ubuntu:24.10
 
 LABEL maintainer="mh.ice.iu@gmail.com"
 
 RUN apt-get update && \
-    apt-get install -qy openjdk-17-jdk openssh-server git maven && \
+    apt-get install -qy openjdk-21-jdk openssh-server git maven && \
     apt-get clean
 
 #     mkdir /var/run/sshd && \
