@@ -38,10 +38,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan \
-            -var "ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
-            -var "access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-            -var "secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform plan -out=tfplan -var "ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
         working-directory: ./terraform/aws
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
