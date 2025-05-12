@@ -23,7 +23,8 @@ jobs:
                 ssh-add ~/.ssh/id_rsa
             - name: Install Terraform
               uses: hashicorp/setup-terraform@v1
-            - name: COnfigure Terraform Credentials
+            
+            - name: Configure Terraform Credentials
               run: |
                 mkdir -p ~/.terraform.d
                 echo '{"credentials": {"app.terraform.io": {"token": "${{ secrets.TF_CLOUD_TOKEN }}"}}}' > ~/.terraform.d/credentials.tfrc.json
@@ -45,7 +46,7 @@ jobs:
                 name: tfplan
                 path: tfplan
             - name: Download Terraform Plan
-              uses: actions@download-artifact@v2
+              uses: actions/download-artifact@v2
               with:
                 name: tfplan
                 path: .
