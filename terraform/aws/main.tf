@@ -43,7 +43,7 @@ resource "aws_security_group" "ec2-sgtf" {
 
   name = "ec2-sgtf"
 
-  vpc_id = module.vpc.default_vpc_id
+  vpc_id = module.vpc.vpc_id
 
   ingress {
     from_port   = 22
