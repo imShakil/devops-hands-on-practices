@@ -1,4 +1,6 @@
-FROM mysql:8.
+FROM mysql:8.0-debian
 
 COPY ./master_init.sql /docker-entrypoint-initdb.d/master_init.sql
 COPY ./master.cnf /etc/mysql/conf.d/master.cnf
+
+RUN apt update && apt install iputils-ping
