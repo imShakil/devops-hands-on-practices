@@ -16,7 +16,7 @@ resource "google_compute_instance" "mainserver" {
   }
 
   can_ip_forward      = false
-  deletion_protection = true
+  deletion_protection = false
   enable_display      = false
 
   labels = {
